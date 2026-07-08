@@ -1,0 +1,1 @@
+{"host":"logstream0","procid":"1305238","msgid":"heartbeat","severityName":"debug","facilityName":"local3","_time":1666885671.619,"_raw":"mdonnelly: Oct 27 08:47:01 ### Version 1.2.3 Heartbeat active","index":"cribl","sourcetype":"linux","source":"syslog:in_syslog:udp","cribl_pipe":"CriblSyslogPreProcessing"}

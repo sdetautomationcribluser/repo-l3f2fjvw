@@ -1,0 +1,45 @@
+# SDET Pack Testing Framework manifest — cribl-syslog-input
+#
+# Consumed by the SDET pack certification suite (packs sanity test). The suite
+# reads PACK_REGISTRY, fetches this manifest, installs the pack on a DUT, runs
+# each pipeline via `cribl pipe`, and diffs the output against the fixtures below.
+#
+# Fixture paths under tests[].fixtures are relative and resolve against this
+# file's location (see fetchManifest / resolveFixtureUrlsAgainstManifestDir),
+# so they work whether the manifest is fetched over https://, s3://, or file://.
+pack:
+  id: cribl-syslog-input
+  source: git
+  url: https://github.com/sdetautomationcribluser/repo-l3f2fjvw
+
+# The pack ships a Syslog pre-processing pipeline tied to a syslog Source.
+# Declaring the source type lets the framework extract breaker rulesets and
+# metadata fields from the installed source config and pass them to `cribl pipe`.
+source:
+  type: syslog
+
+tests:
+  # Deterministic single event: its _raw carries an ISO-8601 timestamp, so the
+  # pipeline sets __timezone='ISO 8601' and skips the Date.now()-relative
+  # timezone block entirely. Output is stable run-to-run — full value match.
+  - name: syslog_preprocessing_fBA5BU
+    pipeline: CriblSyslogPreProcessing
+    fixtures:
+      input_url: sample://fBA5BU
+      output_url: fixtures/fBA5BU.ndjson
+    comparison:
+      mode: value
+
+  # 1000-event UniFi sample. Events whose _raw lacks a timezone hit the
+  # whole-hour offset correction (group ar8aMa), which is relative to now() and
+  # therefore non-deterministic: _time is shifted and _correctedHours is stamped.
+  # Exclude both from comparison. (The comparator already ignores all __-prefixed
+  # scratch fields such as __secsOff/__hoursOff, so they need no listing here.)
+  - name: syslog_preprocessing_fUkkdV
+    pipeline: CriblSyslogPreProcessing
+    fixtures:
+      input_url: sample://fUkkdV
+      output_url: fixtures/fUkkdV.ndjson
+    comparison:
+      mode: value
+      exclude_fields: [_time, _correctedHours]
