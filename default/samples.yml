@@ -1,0 +1,27 @@
+tb6iJJ:
+  sampleName: syslog-linux.log
+  description: Sample file with a mix of syslog formats
+  created: 1623255554361
+  size: 98899
+  numEvents: 122
+3wMQWc:
+  sampleName: netgear.log
+  description: Syslog data from Ubiquiti network gear
+  created: 1637253293785
+  size: 7869
+  numEvents: 16
+fUkkdV:
+  sampleName: unifi.log
+  created: 1645662137106
+  size: 649074
+  numEvents: 1000
+bi114R:
+  sampleName: RFC5424-RFC3164.log
+  created: 1657560892068
+  size: 1097
+  numEvents: 2
+fBA5BU:
+  sampleName: timestamp_in_message.log
+  created: 1666885689924
+  size: 689
+  numEvents: 1
